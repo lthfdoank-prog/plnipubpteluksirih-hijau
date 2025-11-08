@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teluk Sirih Hijau - Konservasi PLN IP UBP Teluk Sirih</title>
+    
+    <!-- Ikon Tab Browser (Favicon) - Ganti dengan logo Anda jika ada -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <style>
+        /* == PENGATURAN DASAR & TEMA == */
+        :root {
+            --green-dark: #2C5F2D;
+            --green-light: #97BC62;
+            --blue-sea: #0077b6;
+            --grey-light: #f4f7f6;
+            --text-dark: #333;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth; /* Membuat scroll ke ID lebih halus */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--white);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        h1, h2, h3 {
+            color: var(--green-dark);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2.2rem; text-align: center; margin-bottom: 2.5rem; }
+        h3 { font-size: 1.4rem; }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background-color: var(--green-light);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--green-dark);
+        }
+
+        /* == 1. NAVIGASI / HEADER == */
+        header {
+            background: var(--white);
+            padding: 1rem 0;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* BARU: Kontainer untuk logo dan judul */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem; /* Jarak antar logo dan judul */
+        }
+
+        /* BARU: Styling untuk logo di header */
+        .header-logo {
+            height: 40px; /* Atur tinggi logo */
+            width: auto;
+            object-fit: contain; /* Memastikan logo tidak penyok */
+        }
+
+        /* DIMODIFIKASI: dari .logo menjadi .logo-text */
+        .logo-text {
+            font-size: 1.3rem; /* Sedikit lebih kecil agar pas */
+            font-weight: bold;
+            color: var(--green-dark);
+            text-decoration: none;
+            white-space: nowrap; /* Mencegah judul terpotong */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center; /* BARU: Menyelaraskan item menu & logo secara vertikal */
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--green-light);
+        }
+
+        /* == 2. HERO SECTION (SLIDESHOW) == */
+        .hero {
+            position: relative;
+            height: 85vh; /* Tinggi banner */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0; /* Semua slide tersembunyi secara default */
+            transition: opacity 1.5s ease-in-out; /* Transisi pudar */
+            z-index: 1;
+        }
+        
+        .hero-slide.active {
+            opacity: 1; /* Slide aktif terlihat */
+        }
+        
+        .hero-slide::before { /* Overlay gelap untuk teks */
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .hero-content {
+            position: relative; /* Agar teks di atas slide */
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        /* Navigasi titik-titik (dots) */
+        .slide-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+        }
+        
+        .dot {
+            height: 12px;
+            width: 12px;
+            margin: 0 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+            cursor: pointer;
+        }
+        
+        .dot.active {
+            background-color: var(--green-light);
+        }
+
+        /* == 3. KOMITMEN == */
+        .commitment-pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .pillar {
+            background: var(--grey-light);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        
+        .pillar-icon {
+            font-size: 3rem;
+            color: var(--green-dark);
+            margin-bottom: 1rem;
+        }
+
+        /* == 4. PROGRAM UNGGULAN == */
+        .programs {
+            background-color: var(--grey-light);
+        }
+
+        .program-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            padding: 2rem;
+            text-align: center;
+            border-top: 5px solid var(--blue-sea);
+        }
+        
+        .card:nth-child(2) {
+             border-top-color: var(--green-dark);
+        }
+        
+        .card:nth-child(3) {
+             border-top-color: var(--green-light);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card h3 {
+            color: var(--text-dark);
+        }
+        
+        .card-data {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--green-dark);
+            margin: 1rem 0;
+        }
+
+        /* == 5. DATA & DAMPAK == */
+        .data-impact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .data-content h3 {
+            font-size: 1.8rem;
+            color: var(--green-dark);
+        }
+        
+        .data-image {
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        /* == 6. GALERI == */
+        .gallery {
+             background-color: var(--grey-light);
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .gallery-item img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        /* == 7. PUSAT UNDUHAN == */
+        .downloads {
+            text-align: center;
+            background-color: var(--green-dark);
+            color: var(--white);
+        }
+        
+        .downloads h2 {
+            color: var(--white);
+        }
+        
+        .downloads-buttons {
+            margin-top: 2rem;
+        }
+        
+        .downloads .btn {
+            background-color: var(--white);
+            color: var(--green-dark);
+            margin: 0.5rem;
+        }
+        
+        .downloads .btn:hover {
+            background-color: var(--green-light);
+            color: var(--white);
+        }
+
+        /* == 8. FOOTER == */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        footer p {
+            margin: 0;
+        }
+
+        /* == RESPONSIVE (Untuk HP) == */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .hero h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+            
+            /* Sembunyikan menu desktop */
+            nav ul {
+                display: none;
+            }
+            
+            /* BARU: Pusatkan logo container di mobile (karena nav hilang) */
+            header .container {
+                justify-content: center; 
+            }
+
+            /* BARU: Kecilkan logo dan teks di tablet */
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .header-logo {
+                height: 35px;
+            }
+
+
+            .commitment-pillars {
+                grid-template-columns: 1fr;
+            }
+
+            .program-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .data-impact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .data-impact-grid .data-image {
+                /* Balik urutan di mobile untuk data-impact-grid kedua */
+                order: -1;
+            }
+            
+            /* Pastikan urutan untuk grid pertama tetap benar */
+            .data-impact-grid:first-of-type .data-image {
+                order: 0;
+            }
+
+
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            
+            /* BARU: Atur ulang logo di layar ponsel kecil */
+            .logo-container {
+                flex-wrap: wrap; /* Izinkan wrapping */
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            .logo-text {
+                font-size: 1.1rem;
+                white-space: normal; /* Izinkan judul wrap */
+                text-align: center;
+                flex-basis: 100%; /* Buat judul mengambil baris baru */
+                order: 2; /* Taruh judul di bawah logo */
+            }
+            .header-logo {
+                height: 30px;
+                order: 1; /* Taruh logo di atas judul */
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVIGASI / HEADER -->
+    <header>
+        <div class="container">
+            <!-- MODIFIKASI: Logo Container -->
+            <div class="logo-container">
+                <!-- PENTING: Ganti 'Danantara_indonesia.svg.png' dengan nama file logo Anda -->
+                <img src="Danantara_indonesia.svg.png" alt="Logo Danantara Indonesia" class="header-logo logo-left">
+                
+                <a href="#" class="logo-text">TELUK SIRIH HIJAU</a>
+                
+                <!-- PENTING: Ganti 'logo_PLN.svg' dengan nama file logo Anda -->
+                <!-- Logo PLN dipindahkan dari sini -->
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="#komitmen">Komitmen</a></li>
+                    <li><a href="#program">Program</a></li>
+                    <li><a href="#data">Data & Peta</a></li>
+                    <li><a href="#galeri">Galeri</a></li>
+                    <li><a href="#unduh">Unduhan</a></li>
+                    <!-- PENTING: Logo PLN dipindahkan ke sini -->
+                    <li>
+                        <img src="logo_PLN.svg" alt="Logo PLN" class="header-logo">
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- 2. HERO SECTION (SLIDESHOW) -->
+        <!-- Gunakan nama file gambar yang Anda unggah: 'teluk-sirih.jpg' dan 'Screenshot_12.jpg' -->
+        <section class="hero" id="beranda">
+            
+            <!-- Slide 1 -->
+            <div class="hero-slide active" style="background-image: url('teluk-sirih.jpg');"></div>
+            <!-- Slide 2 -->
+            <div class="hero-slide" style="background-image: url('Screenshot_12.png');"></div>
+            <!-- Tambah slide lain di sini jika perlu -->
+            <!-- <div class="hero-slide" style="background-image: url('gambar_lain.jpg');"></div> -->
+
+            <!-- Konten Teks di Atas Slide -->
+            <div class="hero-content">
+                <h1>Melestarikan Jantung Hijau Teluk Sirih</h1>
+                <p>Komitmen PT PLN Indonesia Power UBP Teluk Sirih untuk operasional andal yang bersinergi dengan kelestarian alam.</p>
+                <a href="#program" class="btn">Jelajahi Program Kami</a>
+            </div>
+
+            <!-- Navigasi Titik-titik (Dots) -->
+            <div class="slide-dots">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <!-- Tambah dot lain di sini jika Anda menambah slide -->
+                <!-- <span class="dot" onclick="currentSlide(3)"></span> -->
+            </div>
+        </section>
+
+        <!-- 3. KOMITMEN KAMI -->
+        <section id="komitmen" class="commitment">
+            <div class="container">
+                <h2>Sinergi Energi dan Konservasi</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 2.5rem auto;">
+                    PT PLN Indonesia Power UBP Teluk Sirih berkomitmen menjalankan operasi yang andal dan efisien, sekaligus bertanggung jawab melestarikan lingkungan. Pengelolaan keanekaragaman hayati adalah bagian integral dari strategi keberlanjutan kami.
+                </p>
+                <div class="commitment-pillars">
+                    <div class="pillar">
+                        <div class="pillar-icon">??</div>
+                        <h3>Konservasi Ekosistem</h3>
+                        <p>Termasuk rehabilitasi lahan hijau untuk menjaga keseimbangan alam.</p>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">??</div>
+                        <h3>Pelestarian Flora & Fauna</h3>
+                        <p>Melindungi dan melestarikan spesies lokal dan endemik di area kami.</p>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">??</div>
+                        <h3>Pemberdayaan Masyarakat</h3>
+                        <p>Mendorong nilai tambah ekonomi berkelanjutan berbasis lingkungan.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PROGRAM UNGGULAN KAMI -->
+        <section id="program" class="programs">
+            <div class="container">
+                <h2>Program Keanekaragaman Hayati</h2>
+                <div class="program-cards">
+                    <!-- Kartu 1: Terumbu Karang -->
+                    <div class="card">
+                        <div class="card-icon">??</div>
+                        <h3>Konservasi Terumbu Karang</h3>
+                        <p>Bekerjasama dengan LKKPN Pekanbaru untuk memulihkan ekosistem laut.</p>
+                        <div class="card-data">976</div>
+                        <p>Bibit Telah Ditransplantasi</p>
+                    </div>
+                    <!-- Kartu 2: Tanaman Endemik -->
+                    <div class="card">
+                        <div class="card-icon">??</div>
+                        <h3>Konservasi Tanaman Endemik</h3>
+                        <p>Melindungi pohon langka (Andalas 14, P. Kuning 5, Cemara 14, P. Manila 5).</p>
+                        <div class="card-data">38+</div>
+                        <p>Total Batang Pohon Endemik</p>
+                    </div>
+                    <!-- Kartu 3: Penghijauan -->
+                    <div class="card">
+                        <div class="card-icon">??</div>
+                        <h3>Program Penghijauan</h3>
+                        <p>Penanaman rutin pohon produktif (Kaliandra 100, Tabebuya 30, dll).</p>
+                        <div class="card-data">220+</div>
+                        <p>Total Pohon Baru Ditanam</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. DATA & DAMPAK -->
+        <section id="data" class="data-impact">
+            <div class="container">
+                <h2>Data & Dampak yang Terukur</h2>
+                
+                <!-- Peta Kawasan -->
+                <div class="data-impact-grid" style="margin-bottom: 4rem;">
+                    <div class="data-content">
+                        <h3>Peta Kawasan Konservasi</h3>
+                        <p>Kami telah memetakan 5 stasiun pengamatan flora dan fauna utama di kawasan PLTU Teluk Sirih untuk memonitor keanekaragaman hayati secara berkala.</p>
+                        <ul>
+                            <li>Stasiun 1: Area Mess</li>
+                            <li>Stasiun 2: Area Operasional</li>
+                            <li>Stasiun 3: Area Jetty</li>
+                            <li>Stasiun 4: Area Outfall</li>
+                            <li>Stasiun 5: Area FABA</li>
+                        </ul>
+                    </div>
+                    <div class="data-image">
+                        <!-- PENTING: Ganti 'PETA_KONSERVASI.png' dengan file gambar Peta dari dokumen Word Anda -->
+                        <img src="PETA_KONSERVASI.png" alt="Peta Kawasan Konservasi Kehati PLTU Teluk Sirih">
+                    </div>
+                </div>
+
+                <!-- Grafik Indeks Kehati -->
+                <div class="data-impact-grid">
+                     <div class="data-image">
+                        <!-- PENTING: Ganti 'GRAFIK_KEHATI.png' dengan file gambar Grafik dari dokumen Word Anda -->
+                        <img src="GRAFIK_KEHATI.png" alt="Grafik Peningkatan Status Indeks Kehati 2024-2025">
+                    </div>
+                    <div class="data-content">
+                        <h3>Kemajuan yang Terukur</h3>
+                        <p>Kami bangga melihat peningkatan nyata dalam Indeks Keanekaragaman Hayati kami. Ini adalah bukti bahwa upaya konservasi yang kami lakukan memberikan dampak positif.</p>
+                        <h3 style="color: var(--green-light); font-size: 2.5rem;">1.18 ? 1.23</h3>
+                        <p><strong>Peningkatan Indeks Strata Pohon</strong> dari tahun 2024 ke 2025 menunjukkan pertumbuhan positif dalam kesehatan ekosistem kami.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. GALERI -->
+        <section id="galeri" class="gallery">
+            <div class="container">
+                <h2>Momen dari Lapangan</h2>
+                <div class="gallery-grid">
+                    <!-- PENTING: Ganti 'foto_kegiatan_1.jpg' dst. dengan file gambar Anda (Source 11) -->
+                    <div class="gallery-item">
+                        <img src="foto_kegiatan_1.jpg" alt="Foto Kegiatan Penanaman Pohon">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="foto_kegiatan_2.jpg" alt="Foto Transplantasi Terumbu Karang">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="foto_tanaman_1.jpg" alt="Foto Pohon Endemik Andalas">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="foto_area_hijau.jpg" alt="Area Hijau Pembangkit">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="foto_kegiatan_3.jpg" alt="Pemberdayaan Masyarakat">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="foto_tanaman_2.jpg" alt="Pohon Tabebuya">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. PUSAT UNDUHAN -->
+        <section id="unduh" class="downloads">
+            <div class="container">
+                <h2>Pusat Materi dan Laporan</h2>
+                <p>Akses data lengkap dan publikasi kami mengenai program keanekaragaman hayati.</p>
+                <div class="downloads-buttons">
+                    <!-- PENTING: GANTI '#' dengan TAUTAN/LINK ke file PDF Anda -->
+                    <a href="#download-data" class="btn" target="_blank">? Download Data Status Kehati</a>
+                    <a href="#download-buku" class="btn" target="_blank">? Download Buku ISBN Kehati</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 8. FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 PT PLN Indonesia Power UBP Teluk Sirih. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- KODE JAVASCRIPT UNTUK SLIDESHOW -->
+    <script>
+        let slideIndex = 1;
+        let autoSlideInterval;
+
+        // Tampilkan slide pertama saat dimuat
+        document.addEventListener("DOMContentLoaded", function() {
+            showSlides(slideIndex);
+            startAutoSlide();
+        });
+
+        // Fungsi untuk mengontrol slide secara manual melalui dots
+        function currentSlide(n) {
+            stopAutoSlide(); // Berhenti dulu jika user klik manual
+            showSlides(slideIndex = n);
+            startAutoSlide(); // Mulai lagi
+        }
+        
+        // Fungsi untuk slide maju/mundur (digunakan oleh auto-slide)
+        function plusSlides(n) {
+            stopAutoSlide();
+            showSlides(slideIndex += n);
+            startAutoSlide();
+        }
+
+        // Fungsi utama untuk menampilkan slide
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("hero-slide");
+            let dots = document.getElementsByClassName("dot");
+            
+            // Atur slideIndex agar berputar (looping)
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            
+            // Sembunyikan semua slide
+            for (i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+            }
+            
+            // Hapus kelas 'active' dari semua dots
+            for (i = 0; i < dots.length; i++) {
+                dots[i].classList.remove('active');
+            }
+            
+            // Tampilkan slide saat ini dan tandai dot yang sesuai
+            if (slides.length > 0) {
+                slides[slideIndex-1].classList.add('active');
+                dots[slideIndex-1].classList.add('active');
+            }
+        }
+
+        // Fungsi untuk memulai slideshow otomatis
+        function startAutoSlide() {
+            stopAutoSlide(); // Hentikan interval sebelumnya (jika ada)
+            autoSlideInterval = setInterval(function() {
+                plusSlides(1); // Pindah ke slide berikutnya
+            }, 5000); // Ganti gambar setiap 5 detik (5000ms)
+        }
+
+        // Fungsi untuk menghentikan slideshow otomatis
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+    </script>
+
+</body>
+</html>
