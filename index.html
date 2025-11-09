@@ -359,18 +359,11 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
         
-        /* CSS LAMA (Dihapus)
-        .pillar-icon {
-            font-size: 3rem;
-            color: var(--green-dark);
-            margin-bottom: 1rem;
-        }
-        */
-        
         /* PENYEMPURNAAN: CSS untuk Gambar Pilar */
         .pillar-image-container {
             width: 100%;
-            aspect-ratio: 16 / 9;
+            /* PERBAIKAN 1: Resolusi 1:1 */
+            aspect-ratio: 1 / 1;
             overflow: hidden;
             border-radius: 8px;
             margin-bottom: 1rem;
@@ -420,22 +413,11 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
         
-        /* CSS LAMA (Dihapus)
-        .card-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-        }
-        */
-
         /* PENYEMPURNAAN: CSS untuk Gambar Kartu Program */
         .card-image-container {
             width: calc(100% + 4rem); /* Lebar penuh + padding */
-            aspect-ratio: 16 / 9;
+            /* PERBAIKAN 1: Resolusi 1:1 */
+            aspect-ratio: 1 / 1;
             overflow: hidden;
             margin: -2rem -2rem 1.5rem -2rem; /* Tarik gambar ke tepi kartu */
         }
@@ -725,7 +707,7 @@
         /* == 8. FOOTER == */
         footer {
             background: var(--text-dark);
-            color: var(--white);
+            color: var(--white); /* -> Ini akan jadi hitam di dark mode */
             text-align: center;
             padding: 2rem 0;
             transition: background-color 0.3s ease;
@@ -733,7 +715,7 @@
         
         footer p {
             margin: 0;
-            color: #f0f0f0;
+            color: #f0f0f0; /* -> Ini me-override 'color' di atas, jadi akan tetap terang */
         }
         
         /* == BARU: MODAL (POPUP) UNTUK PETA & GALERI == */
@@ -985,11 +967,11 @@
         <!-- 2. HERO SECTION (SLIDESHOW) -->
         <section class="hero" id="beranda">
             
-            <!-- BARU: 4 Slide Banner -->
-            <div class="hero-slide active" style="background-image: url('https://placehold.co/1920x1080/2C5F2D/FFFFFF?text=Pemandangan+Teluk+Sirih+1');"></div>
-            <div class="hero-slide" style="background-image: url('https://placehold.co/1920x1080/0077b6/FFFFFF?text=Pemandangan+Teluk+Sirih+2');"></div> 
-            <div class="hero-slide" style="background-image: url('https://plac');"></div> 
-            <div class="hero-slide" style="background-image: url('https://placehold.co/1920x1080/FFD700/333333?text=Energi+Berkelanjutan+4');"></div> 
+            <!-- PERBAIKAN 2: 4 Slide Banner Baru -->
+            <div class="hero-slide active" style="background-image: url('https://lh3.googleusercontent.com/d/1fGrkhpa_9zaz_KbJci0Elpx_WK68Esvz');"></div>
+            <div class="hero-slide" style="background-image: url('https://lh3.googleusercontent.com/d/1-wT-2DLD3JxXGCH5abzmadqSwrBnWv3e');"></div> 
+            <div class="hero-slide" style="background-image: url('https://lh3.googleusercontent.com/d/1ChZuQ8SZ2x8YHiIGo8v45GIJWzn9nrPt');"></div> 
+            <div class="hero-slide" style="background-image: url('https://lh3.googleusercontent.com/d/1u9Xm6Z-YX1PzsgDCmBNG7Jt_5VT_Dp2O');"></div> 
 
             <div class="hero-content">
                 <h1>Melestarikan Jantung Hijau Teluk Sirih</h1>
@@ -1017,7 +999,7 @@
                     <div class="pillar">
                         <!-- PENYEMPURNAAN: Ikon diganti gambar -->
                         <div class="pillar-image-container">
-                            <img src="https://i.imgur.com/eppqDsN.png" alt="Konservasi Ekosistem">
+                            <img src="https://placehold.co/400x400/2C5F2D/FFFFFF?text=Konservasi+Ekosistem" alt="Konservasi Ekosistem">
                         </div>
                         <h3>Konservasi Ekosistem</h3>
                         <p>Termasuk rehabilitasi lahan hijau untuk menjaga keseimbangan alam.</p>
@@ -1025,7 +1007,7 @@
                     <div class="pillar">
                         <!-- PENYEMPURNAAN: Ikon diganti gambar -->
                         <div class="pillar-image-container">
-                            <img src="https://i.imgur.com/YVYEuUY.png" alt="Pelestarian Flora & Fauna">
+                            <img src="https://placehold.co/400x400/0077b6/FFFFFF?text=Pelestarian+Flora+Fauna" alt="Pelestarian Flora & Fauna">
                         </div>
                         <h3>Pelestarian Flora & Fauna</h3>
                         <p>Melindungi dan melestarikan spesies lokal dan endemik di area kami.</p>
@@ -1033,7 +1015,7 @@
                     <div class="pillar">
                         <!-- PENYEMPURNAAN: Ikon diganti gambar -->
                         <div class="pillar-image-container">
-                            <img src="https://i.imgur.com/p4C6bjD.png" alt="Pemberdayaan Masyarakat">
+                            <img src="https://placehold.co/400x400/FFD700/333333?text=Pemberdayaan+Masyarakat" alt="Pemberdayaan Masyarakat">
                         </div>
                         <h3>Pemberdayaan Masyarakat</h3>
                         <p>Mendorong nilai tambah ekonomi berkelanjutan berbasis lingkungan.</p>
@@ -1050,7 +1032,7 @@
                     <div class="card">
                         <!-- PENYEMPURNAAN: Ikon diganti gambar header kartu -->
                         <div class="card-image-container">
-                            <img src="https://i.imgur.com/A7BSuPi.png" alt="Konservasi Terumbu Karang">
+                            <img src="https://placehold.co/400x400/0077b6/FFFFFF?text=Konservasi+Terumbu+Karang" alt="Konservasi Terumbu Karang">
                         </div>
                         <h3>Konservasi Terumbu Karang</h3>
                         <p>Bekerjasama dengan LKKPN Pekanbaru untuk memulihkan ekosistem laut.</p>
@@ -1060,7 +1042,7 @@
                     <div class="card">
                         <!-- PENYEMPURNAAN: Ikon diganti gambar header kartu -->
                         <div class="card-image-container">
-                            <img src="https://i.imgur.com/QQJDujj.png" alt="Konservasi Tanaman Endemik">
+                            <img src="https://placehold.co/400x400/2C5F2D/FFFFFF?text=Konservasi+Tanaman+Endemik" alt="Konservasi Tanaman Endemik">
                         </div>
                         <h3>Konservasi Tanaman Endemik</h3>
                         <p>Melindungi pohon langka (Andalas 14, P. Kuning 5, Cemara 14, P. Manila 5).</p>
@@ -1070,7 +1052,7 @@
                     <div class="card">
                         <!-- PENYEMPURNAAN: Ikon diganti gambar header kartu -->
                         <div class="card-image-container">
-                            <img src="https://i.imgur.com/wYH4MEr.png" alt="Program Penghijauan">
+                            <img src="https://placehold.co/400x400/97BC62/FFFFFF?text=Program+Penghijauan" alt="Program Penghijauan">
                         </div>
                         <h3>Program Penghijauan</h3>
                         <p>Penanaman rutin pohon produktif (Kaliandra 100, Tabebuya 30, dll).</p>
@@ -1103,7 +1085,7 @@
                         <!-- 
                             PENTING: GANTI 'https://...' DI BAWAH DENGAN URL PUBLIK DARI 'peta.jpg' ANDA 
                         -->
-                        <img id="mapImage" src="https://i.imgur.com/1RjWHYn.png" alt="Peta Kawasan Konservasi Kehati PLTU Teluk Sirih">
+                        <img id="mapImage" src="https://placehold.co/800x600/f4f7f6/333333?text=Ganti+dengan+URL+peta.jpg+Anda" alt="Peta Kawasan Konservasi Kehati PLTU Teluk Sirih">
                     </div>
                 </div>
 
@@ -1244,7 +1226,8 @@
                     <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/19zVvC0hxsqtiVWDbvqbIkzwUarAEe-6G" alt="Galeri Foto Teluk Sirih"></div>
                     <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1gOGeEIxBBvFE1l8DeLRUMFauSjfBvCFk" alt="Galeri Foto Teluk Sirih"></div>
                     <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1H3zVRdqZUgV56glpSyvDbWl9dsahCIYw" alt="Galeri Foto Teluk Sirih"></div>
-                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1mf6G6I_1Fx4W134XT0XLFbiyvwOkcnrL" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="httpsS://lh3.googleusercontent.com/d/1mf6G6I_1Fx4W134XT0XLFbiyvwOkcnrL" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="httpswww.googleapis.com/drive/v3/files/1mf6G6I_1Fx4W134XT0XLFbiyvwOkcnrL?alt=media" alt="Galeri Foto Teluk Sirih"></div>
                     <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/18ZTgATLjs6QjxGkE4SvWKhNvzBqhtSzi" alt="Galeri Foto Teluk Sirih"></div>
                     <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1WpAW37sUJ52XmXLQzlvrYy99max99Jq9" alt="Galeri Foto Teluk Sirih"></div>
                     <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1dJ78kqySxnCh77EYHh7iqoD4pF0Ek6lI" alt="Galeri Foto Teluk Sirih"></div>
@@ -1269,6 +1252,7 @@
     <!-- 8. FOOTER -->
     <footer>
         <div class="container">
+            <!-- PERBAIKAN 3: CSS 'footer p' sudah diatur ke #f0f0f0 (terang) secara global, jadi ini sudah benar -->
             <p>&copy; 2024 PT PLN Indonesia Power UBP Teluk Sirih. All Rights Reserved.</p>
         </div>
     </footer>
@@ -1511,4 +1495,3 @@
 
 </body>
 </html>
-
