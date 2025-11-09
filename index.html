@@ -713,6 +713,7 @@
             background-image: none;
             background-color: var(--white);
             color: var(--green-dark);
+            margin: 0.5rem; /* Margin asli */
         }
         
         .downloads .btn:hover {
@@ -932,6 +933,13 @@
             .card-image-container {
                  width: calc(100% + 4rem);
                  margin: -2rem -2rem 1.5rem -2rem;
+            }
+            
+            /* PERBAIKAN: Beri jarak tombol download di mobile */
+            .downloads .btn {
+                display: block;
+                margin: 1rem auto; /* 1rem atas/bawah, tengah */
+                width: 80%; /* Agar tidak terlalu lebar */
             }
         }
 
