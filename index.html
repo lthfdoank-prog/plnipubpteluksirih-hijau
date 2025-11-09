@@ -6,32 +6,59 @@
     <title>Teluk Sirih Hijau - Konservasi PLN IP UBP Teluk Sirih</title>
     
     <!-- Ikon Tab Browser (Favicon) - Ganti dengan logo Anda jika ada -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://placehold.co/32x32/2C5F2D/FFFFFF?text=TS" type="image/x-icon">
     
     <style>
         /* == PENGATURAN DASAR & TEMA == */
         :root {
+            /* Warna Light Mode */
             --green-dark: #2C5F2D;
             --green-light: #97BC62;
             --blue-sea: #0077b6;
+            --yellow-accent: #FFD700;
             --grey-light: #f4f7f6;
             --text-dark: #333;
             --white: #ffffff;
+            --bg-color: var(--white);
+            --text-color: var(--text-dark);
+            --card-bg: var(--white);
+            --header-bg: rgba(255, 255, 255, 0.85);
+            --border-color: rgba(221, 221, 221, 0.5);
+            
+            /* BARU: Gradien Aksen */
+            --accent-gradient: linear-gradient(90deg, var(--blue-sea) 0%, var(--green-light) 50%, var(--yellow-accent) 100%);
+        }
+
+        /* BARU: Pengaturan Dark Mode */
+        [data-theme='dark'] {
+            --green-dark: #97BC62;
+            --green-light: #2C5F2D;
+            --blue-sea: #00aaff;
+            --yellow-accent: #FFD700;
+            --grey-light: #1e1e1e;
+            --text-dark: #f0f0f0;
+            --white: #121212;
+            --bg-color: var(--white);
+            --text-color: var(--text-dark);
+            --card-bg: var(--grey-light);
+            --header-bg: rgba(25, 25, 25, 0.85);
+            --border-color: rgba(50, 50, 50, 0.5);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            scroll-behavior: smooth; /* Membuat scroll ke ID lebih halus */
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.7;
-            color: var(--text-dark);
-            background-color: var(--white);
-            overflow-x: hidden; /* Mencegah scroll horizontal dari animasi */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -42,6 +69,7 @@
 
         section {
             padding: 4rem 0;
+            overflow: hidden; /* Mencegah elemen animasi meluap */
         }
 
         h1, h2, h3 {
@@ -50,12 +78,26 @@
             line-height: 1.3;
         }
 
+        /* BARU: Judul dengan gradien */
+        h2 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            display: inline-block; /* Diperlukan untuk background-clip */
+            width: 100%;
+        }
+
         h1 { font-size: 2.8rem; }
-        h2 { font-size: 2.2rem; text-align: center; margin-bottom: 2.5rem; }
-        h3 { font-size: 1.4rem; }
+        h3 { font-size: 1.4rem; color: var(--green-dark); }
         
         p {
             margin-bottom: 1rem;
+            color: var(--text-color);
         }
 
         img {
@@ -67,35 +109,33 @@
         .btn {
             display: inline-block;
             padding: 0.8rem 1.8rem;
-            background-color: var(--green-light);
-            color: var(--white);
+            background-image: var(--accent-gradient);
+            background-size: 200% 100%;
+            color: var(--text-dark);
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
-            /* ANIMASI BARU */
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            transition: background-position 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .btn:hover {
-            background-color: var(--green-dark);
-            /* EFEK BARU */
+            background-position: 100% 0;
             transform: scale(1.05);
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         /* == 1. NAVIGASI / HEADER == */
         header {
-            /* EFEK BARU: Glassmorphism */
-            background: rgba(255, 255, 255, 0.85); /* Latar belakang transparan */
-            backdrop-filter: blur(10px); /* Efek blur */
-            -webkit-backdrop-filter: blur(10px); /* Dukungan Safari */
-            
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 1rem 0;
-            border-bottom: 1px solid rgba(221, 221, 221, 0.5); /* Border transparan */
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 100;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease;
         }
 
         header .container {
@@ -107,27 +147,40 @@
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 0.8rem; /* Jarak antar logo dan judul */
+            gap: 0.8rem;
         }
 
         .header-logo {
-            height: 40px; /* Atur tinggi logo */
+            height: 40px;
             width: auto;
-            object-fit: contain; /* Memastikan logo tidak penyok */
+            object-fit: contain;
+            transition: filter 0.3s ease;
+        }
+        
+        /* BARU: Efek shadow dark mode untuk logo kiri */
+        [data-theme='dark'] .logo-left {
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
         }
 
         .logo-text {
-            font-size: 1.6rem; /* Diperbesar dari 1.3rem */
-            font-weight: 800;  /* Dipertegas (bold -> 800) */
+            font-size: 1.6rem;
+            font-weight: 800;
             color: var(--green-dark);
             text-decoration: none;
-            white-space: nowrap; /* Mencegah judul terpotong */
+            white-space: nowrap;
+            transition: color 0.3s ease;
         }
 
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
         nav ul {
             list-style: none;
             display: flex;
-            align-items: center; /* Menyelaraskan item menu & logo secara vertikal */
+            align-items: center;
         }
 
         nav ul li {
@@ -136,19 +189,70 @@
 
         nav ul li a {
             text-decoration: none;
-            color: var(--text-dark);
+            color: var(--text-color);
             font-weight: bold;
             transition: color 0.3s ease;
         }
 
         nav ul li a:hover {
-            color: var(--green-light);
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        /* BARU: Dark Mode Toggle */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 44px;
+        }
+        .theme-switch input {
+            display: none;
+        }
+        .theme-slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .theme-slider:before {
+            background-color: var(--white);
+            bottom: 2px;
+            content: "";
+            height: 20px;
+            left: 2px;
+            position: absolute;
+            transition: .4s;
+            width: 20px;
+            border-radius: 50%;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='orange' class='bi bi-sun-fill' viewBox='0 0 16 16'><path d='M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.464a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707'/></svg>");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        input:checked + .theme-slider {
+            background-color: var(--blue-sea);
+        }
+        input:checked + .theme-slider:before {
+            transform: translateX(20px);
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-moon-stars-fill' viewBox='0 0 16 16'><path d='M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0 .878 3.82A1 1 0 0 1 6.83A5.22c.046.06.09.114.135.168.043.05.084.1.127.145.043.045.086.088.132.128.045.04.088.08.13.118.044.038.087.076.13.111a1 1 0 0 1 .117.127c.04.043.08.086.118.13.038.043.076.086.11.13a1 1 0 0 1 .128.132c.04.045.08.088.12.13.047.047.095.092.14.135a1 1 0 0 1 .168.135 7.2 7.2 0 0 0 3.82.878.77.77 0 0 1 .858.08A.76.76 0 0 1 15.722 6c0-3.86-3.14-7-7-7a.76.76 0 0 1-.278.08M10.02 11.23c.31-.05.51-.36.31-.65a.77.77 0 0 0-.64-.31.77.77 0 0 0-.65.31c-.2.3.001.6.31.65m2.384-2.384c.31-.05.51-.36.31-.65a.77.77 0 0 0-.64-.31.77.77 0 0 0-.65.31c-.2.3.001.6.31.65m-1.19-2.17a.77.77 0 0 0-.65.31c-.2.3.001.6.31.65s.6-.001.65-.31a.77.77 0 0 0-.31-.65M4.93 10.24c.31-.05.51-.36.31-.65a.77.77 0 0 0-.64-.31.77.77 0 0 0-.65.31c-.2.3.001.6.31.65m2.384-2.384c.31-.05.51-.36.31-.65a.77.77 0 0 0-.64-.31.77.77 0 0 0-.65.31c-.2.3.001.6.31.65m-1.19-2.17a.77.77 0 0 0-.65.31c-.2.3.001.6.31.65s.6-.001.65-.31a.77.77 0 0 0-.31-.65'/></svg>");
         }
 
         /* == 2. HERO SECTION (SLIDESHOW) == */
         .hero {
             position: relative;
-            height: 85vh; /* Tinggi banner */
+            height: 85vh;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -165,16 +269,14 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 0; /* Semua slide tersembunyi secara default */
-            transition: opacity 1.5s ease-in-out; /* Transisi pudar */
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
             z-index: 1;
         }
         
-        .hero-slide.active {
-            opacity: 1; /* Slide aktif terlihat */
-        }
+        .hero-slide.active { opacity: 1; }
         
-        .hero-slide::before { /* Overlay gelap untuk teks */
+        .hero-slide::before {
             content: "";
             position: absolute;
             top: 0;
@@ -185,7 +287,7 @@
         }
 
         .hero-content {
-            position: relative; /* Agar teks di atas slide */
+            position: relative;
             max-width: 600px;
             z-index: 2;
         }
@@ -200,6 +302,7 @@
             font-size: 1.2rem;
             margin-bottom: 2rem;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            color: #f0f0f0;
         }
         
         .slide-dots {
@@ -235,15 +338,15 @@
         }
 
         .pillar {
-            background: var(--grey-light);
+            background: var(--card-bg);
             padding: 2rem;
             border-radius: 8px;
-            /* ANIMASI BARU */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            border-top: 5px solid;
+            border-image: var(--accent-gradient) 1;
         }
         
         .pillar:hover {
-            /* EFEK BARU */
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
@@ -253,10 +356,15 @@
             color: var(--green-dark);
             margin-bottom: 1rem;
         }
+        
+        .pillar h3 {
+            color: var(--text-color);
+        }
 
         /* == 4. PROGRAM UNGGULAN == */
         .programs {
             background-color: var(--grey-light);
+            transition: background-color 0.3s ease;
         }
 
         .program-cards {
@@ -266,37 +374,34 @@
         }
 
         .card {
-            background: var(--white);
+            background: var(--card-bg);
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             padding: 2rem;
             text-align: center;
-            border-top: 5px solid var(--blue-sea);
-            /* ANIMASI BARU */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* BARU: Gradien border */
+            border-top: 5px solid;
+            border-image: var(--accent-gradient) 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
         }
         
         .card:hover {
-            /* EFEK BARU */
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
         
-        .card:nth-child(2) {
-             border-top-color: var(--green-dark);
-        }
-        
-        .card:nth-child(3) {
-             border-top-color: var(--green-light);
-        }
-
         .card-icon {
             font-size: 3.5rem;
             margin-bottom: 1rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
         }
         
         .card h3 {
-            color: var(--text-dark);
+            color: var(--text-color);
         }
         
         .card-data {
@@ -304,6 +409,7 @@
             font-weight: bold;
             color: var(--green-dark);
             margin: 1rem 0;
+            transition: color 0.3s ease;
         }
 
         /* == 5. DATA & DAMPAK == */
@@ -312,6 +418,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: center;
+            margin-bottom: 3rem;
         }
 
         .data-content h3 {
@@ -319,29 +426,208 @@
             color: var(--green-dark);
         }
         
+        .data-content ul {
+            list-style-position: inside;
+            padding-left: 0;
+        }
+        
+        .data-content li {
+            margin-bottom: 0.5rem;
+        }
+        
         .data-image {
             text-align: center;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             padding: 1rem;
             border-radius: 8px;
+            background: var(--card-bg);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* BARU: Peta Interaktif */
+        #mapImage {
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+        #mapImage:hover {
+            transform: scale(1.02);
+        }
+
+        /* BARU: Tabel Data */
+        .data-table-wrapper {
+            overflow-x: auto; /* Untuk responsif di mobile */
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .data-table th {
+            background-color: var(--grey-light);
+            color: var(--green-dark);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .data-table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+        .data-table tbody tr:hover {
+            background-color: var(--grey-light);
+        }
+        .data-table td:nth-child(3), .data-table td:nth-child(4), .data-table td:nth-child(5) {
+            text-align: center;
+            font-weight: bold;
+        }
+        .data-table td .positive {
+            color: #28a745;
+        }
+        .data-table td .negative {
+            color: #dc3545;
+        }
+        
+        /* BARU: Grafik HTML/CSS */
+        .chart-container {
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .bar-chart {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 250px;
+            border-bottom: 2px solid var(--text-color);
+            padding-top: 10px;
+        }
+        
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .bar {
+            width: 50px;
+            background-image: var(--accent-gradient);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            height: 0; /* Animasi dari 0 */
+            transition: height 1.5s ease-out;
+        }
+        
+        .bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        
+        .year {
+            font-weight: bold;
+            color: var(--text-color);
+            margin-top: 5px;
+        }
+        
+        /* Grafik Fauna (Grouped) */
+        .grouped-chart {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 300px;
+            border-bottom: 2px solid var(--text-color);
+            padding-top: 10px;
+        }
+        
+        .year-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .bar-multi-group {
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            height: 100%;
+        }
+        
+        .bar-g {
+            width: 25px;
+            position: relative;
+            height: 0;
+            transition: height 1.5s ease-out;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .bar-g.mamalia { background-color: var(--blue-sea); }
+        .bar-g.burung { background-color: #f0ad4e; } /* Orange */
+        .bar-g.herpetofauna { background-color: #5cb85c; } /* Green */
+        
+        .bar-g::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: var(--text-color);
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
         }
 
         /* == 6. GALERI == */
         .gallery {
              background-color: var(--grey-light);
+             transition: background-color 0.3s ease;
         }
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            /* Buat grid responsif */
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 1rem;
         }
 
         .gallery-item img {
+            /* BARU: Orientasi 1:1 */
             width: 100%;
-            height: 250px;
+            aspect-ratio: 1 / 1;
             object-fit: cover;
             border-radius: 8px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: zoom-in;
         }
         
         .gallery-item img:hover {
@@ -354,10 +640,18 @@
             text-align: center;
             background-color: var(--green-dark);
             color: var(--white);
+            transition: background-color 0.3s ease;
         }
         
         .downloads h2 {
             color: var(--white);
+            background: none; /* Hapus gradien di sini */
+            -webkit-text-fill-color: unset;
+            text-fill-color: unset;
+        }
+        
+        .downloads p {
+            color: #f0f0f0;
         }
         
         .downloads-buttons {
@@ -365,15 +659,15 @@
         }
         
         .downloads .btn {
+            background-image: none;
             background-color: var(--white);
             color: var(--green-dark);
-            margin: 0.5rem;
         }
         
         .downloads .btn:hover {
-            background-color: var(--green-light);
-            color: var(--white);
-            transform: scale(1.05); /* Tambahkan efek hover */
+            background-color: var(--grey-light);
+            color: var(--text-dark);
+            transform: scale(1.05);
         }
 
         /* == 8. FOOTER == */
@@ -382,34 +676,152 @@
             color: var(--white);
             text-align: center;
             padding: 2rem 0;
+            transition: background-color 0.3s ease;
         }
         
         footer p {
             margin: 0;
+            color: #f0f0f0;
         }
         
-        /* == BARU: CSS UNTUK ANIMASI SCROLL == */
+        /* == BARU: MODAL (POPUP) UNTUK PETA & GALERI == */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            cursor: zoom-out;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: auto;
+            height: auto;
+            /* BARU: Ukuran 1:4 (interpretasi: 80% viewport) */
+            max-width: 80vw;
+            max-height: 80vh;
+        }
+        
+        #galleryModal .modal-content {
+            border-radius: 8px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+        
+        /* BARU: Tombol Share Galeri */
+        .share-container {
+            text-align: center;
+            padding: 20px;
+        }
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        .share-btn:hover {
+            transform: scale(1.1);
+        }
+        .share-btn.facebook { background-color: #1877F2; }
+        .share-btn.twitter { background-color: #1DA1F2; }
+        .share-btn.pinterest { background-color: #E60023; }
+        .share-btn.copylink { background-color: #6c757d; }
+        .copy-success {
+            color: var(--green-dark);
+            font-weight: bold;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .copy-success.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+
+        /* == CSS UNTUK ANIMASI SCROLL == */
         .pillar,
         .card,
         .data-impact-grid,
-        .gallery-item {
+        .gallery-item,
+        .data-table-wrapper,
+        .chart-container {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-            transition-delay: 0.1s; /* Sedikit delay */
+            transition-delay: 0.1s;
         }
         
         /* Kelas .visible akan ditambahkan oleh JavaScript */
         .pillar.visible,
         .card.visible,
         .data-impact-grid.visible,
-        .gallery-item.visible {
+        .gallery-item.visible,
+        .data-table-wrapper.visible,
+        .chart-container.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+        
+        /* Animasi bar grafik saat .visible */
+        .bar-chart.visible .bar,
+        .grouped-chart.visible .bar-g {
+            height: var(--bar-height, 0); /* Ditetapkan oleh JS */
         }
 
 
         /* == RESPONSIVE (Untuk HP) == */
+        @media (max-width: 992px) {
+            .program-cards,
+            .commitment-pillars {
+                grid-template-columns: 1fr;
+            }
+            .data-impact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .data-impact-grid:nth-of-type(2) .data-image,
+            .data-impact-grid:nth-of-type(3) .data-image {
+                /* Balik urutan di mobile */
+                order: -1;
+            }
+        }
+        
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
             .hero h1 { font-size: 2.5rem; }
@@ -420,135 +832,111 @@
                 display: none;
             }
             
-            /* BARU: Pusatkan logo container di mobile (karena nav hilang) */
+            /* Pusatkan logo container & toggle di mobile */
             header .container {
-                justify-content: center; 
+                justify-content: space-between; 
             }
 
-            /* BARU: Kecilkan logo dan teks di tablet */
             .logo-text {
-                font-size: 1.4rem; /* Diperbesar dari 1.2rem */
+                font-size: 1.4rem;
             }
 
             .header-logo {
                 height: 35px;
             }
-
-
-            .commitment-pillars {
-                grid-template-columns: 1fr;
-            }
-
-            .program-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .data-impact-grid {
-                grid-template-columns: 1fr;
-            }
             
-            .data-impact-grid .data-image {
-                /* Balik urutan di mobile untuk data-impact-grid kedua */
-                order: -1;
-            }
-            
-            /* Pastikan urutan untuk grid pertama tetap benar */
-            .data-impact-grid:first-of-type .data-image {
-                order: 0;
-            }
-
-
             .gallery-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 0.5rem;
             }
         }
         
         @media (max-width: 480px) {
-            
-            /* BARU: Atur ulang logo di layar ponsel kecil */
             .logo-container {
-                flex-wrap: wrap; /* Izinkan wrapping */
-                justify-content: center;
                 gap: 0.5rem;
             }
             .logo-text {
-                font-size: 1.3rem; /* Diperbesar dari 1.1rem */
-                white-space: normal; /* Izinkan judul wrap */
-                text-align: center;
-                flex-basis: 100%; /* Buat judul mengambil baris baru */
-                order: 2; /* Taruh judul di bawah logo */
+                font-size: 1.1rem;
+                white-space: normal;
+                text-align: left;
             }
             .header-logo {
                 height: 30px;
-                order: 1; /* Taruh logo di atas judul */
             }
             
-            /* Hilangkan logo PLN di header mobile (karena sudah disembunyikan di <ul>) */
-            nav ul li .header-logo {
-                display: none; 
-            }
-
             .gallery-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr); /* 2 kolom di HP */
+            }
+            
+            .modal-content {
+                max-width: 90vw;
+                max-height: 70vh;
+            }
+            
+            .share-buttons {
+                gap: 5px; /* Rapatkan tombol share */
             }
         }
 
     </style>
 </head>
-<body>
+<body data-theme="light"> <!-- data-theme dikontrol oleh JS -->
 
     <!-- 1. NAVIGASI / HEADER -->
     <header>
         <div class="container">
-            <!-- MODIFIKASI: Logo Container -->
             <div class="logo-container">
                 <!-- GANTI DENGAN LINK LOGO ANDA -->
-                <img src="https://putrawijayakusumasakti.co.id/images/logo/danantara.webp" alt="Logo Danantara Indonesia" class="header-logo logo-left">
+                <img src="https://placehold.co/150x50/eeeeee/333333?text=Logo+Danantara" alt="Logo Danantara Indonesia" class="header-logo logo-left">
                 
                 <a href="#" class="logo-text">TELUK SIRIH HIJAU</a>
-                
             </div>
 
             <nav>
                 <ul>
                     <li><a href="#komitmen">Komitmen</a></li>
                     <li><a href="#program">Program</a></li>
-                    <li><a href="#data">Data & Peta</a></li>
+                    <li><a href="#data">Data</a></li>
                     <li><a href="#galeri">Galeri</a></li>
                     <li><a href="#unduh">Unduhan</a></li>
                     <!-- GANTI DENGAN LINK LOGO ANDA -->
                     <li>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Logo_PLN.svg" alt="Logo PLN" class="header-logo">
+                        <img src="https://placehold.co/100x50/eeeeee/0077b6?text=Logo+PLN" alt="Logo PLN" class="header-logo">
                     </li>
                 </ul>
+                <!-- BARU: Dark Mode Toggle -->
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="darkModeToggle">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="theme-slider"></span>
+                    </label>
+                </div>
             </nav>
         </div>
     </header>
 
     <main>
-        <!-- 4. HERO SECTION (SLIDESHOW) -->
+        <!-- 2. HERO SECTION (SLIDESHOW) -->
         <section class="hero" id="beranda">
             
-            <!-- Slide 1 (GANTI DENGAN LINK GAMBAR ANDA) -->
-            <div class="hero-slide active" style="background-image: url('https://www.topsatu.com/wp-content/uploads/2022/01/teluk-sirih.jpg');"></div>
-            <!-- Slide 2 (GANTI DENGAN LINK GAMBAR ANDA) -->
-            <div class="hero-slide" style="background-image: url('https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,f_auto,q_auto:best,w_640/v1556431441/dxb8tldnlpymziz708kk.jpg');"></div>
-             <!-- Slide 3 (GANTI DENGAN LINK GAMBAR ANDA) -->
-            <div class="hero-slide" style="background-image: url('https://i.ytimg.com/vi/S4SljowqSgw/maxresdefault.jpg');"></div>
-             <!-- Slide 4 (GANTI DENGAN LINK GAMBAR ANDA) -->
-            <div class="hero-slide" style="background-image: url('https://www.rumpuntekno.com/assets/mitra/9/2022/11/foto-hari-ini-75.jpg');"></div>
+            <!-- BARU: 4 Slide Banner -->
+            <div class="hero-slide active" style="background-image: url('https://placehold.co/1920x1080/2C5F2D/FFFFFF?text=Pemandangan+Teluk+Sirih+1');"></div>
+            <div class="hero-slide" style="background-image: url('https://placehold.co/1920x1080/0077b6/FFFFFF?text=Pemandangan+Teluk+Sirih+2');"></div> 
+            <div class="hero-slide" style="background-image: url('https://placehold.co/1920x1080/97BC62/FFFFFF?text=Ekosistem+Hijau+3');"></div> 
+            <div class="hero-slide" style="background-image: url('https://placehold.co/1920x1080/FFD700/333333?text=Energi+Berkelanjutan+4');"></div> 
 
-            <!-- Konten Teks di Atas Slide -->
             <div class="hero-content">
                 <h1>Melestarikan Jantung Hijau Teluk Sirih</h1>
                 <p>Komitmen PT PLN Indonesia Power UBP Teluk Sirih untuk operasional andal yang bersinergi dengan kelestarian alam.</p>
                 <a href="#program" class="btn">Jelajahi Program Kami</a>
             </div>
 
-            <!-- Navigasi Titik-titik (Dots) -->
+            <!-- BARU: 4 Titik Navigasi -->
             <div class="slide-dots">
                 <span class="dot active" onclick="currentSlide(1)"></span>
                 <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
             </div>
         </section>
 
@@ -584,7 +972,6 @@
             <div class="container">
                 <h2>Program Keanekaragaman Hayati</h2>
                 <div class="program-cards">
-                    <!-- Kartu 1: Terumbu Karang -->
                     <div class="card">
                         <div class="card-icon">🌊</div>
                         <h3>Konservasi Terumbu Karang</h3>
@@ -592,7 +979,6 @@
                         <div class="card-data">976</div>
                         <p>Bibit Telah Ditransplantasi</p>
                     </div>
-                    <!-- Kartu 2: Tanaman Endemik -->
                     <div class="card">
                         <div class="card-icon">🌱</div>
                         <h3>Konservasi Tanaman Endemik</h3>
@@ -600,7 +986,6 @@
                         <div class="card-data">38+</div>
                         <p>Total Batang Pohon Endemik</p>
                     </div>
-                    <!-- Kartu 3: Penghijauan -->
                     <div class="card">
                         <div class="card-icon">🌳</div>
                         <h3>Program Penghijauan</h3>
@@ -612,16 +997,16 @@
             </div>
         </section>
 
-        <!-- 5. DATA & DAMPAK -->
+        <!-- 5. DATA & DAMPAK (DIROMBAK TOTAL) -->
         <section id="data" class="data-impact">
             <div class="container">
                 <h2>Data & Dampak yang Terukur</h2>
                 
-                <!-- Peta Kawasan -->
-                <div class="data-impact-grid" style="margin-bottom: 4rem;">
+                <!-- BARU: Peta Kawasan Interaktif -->
+                <div class="data-impact-grid">
                     <div class="data-content">
                         <h3>Peta Kawasan Konservasi</h3>
-                        <p>Kami telah memetakan 5 stasiun pengamatan flora dan fauna utama di kawasan PLTU Teluk Sirih untuk memonitor keanekaragaman hayati secara berkala.</p>
+                        <p>Kami telah memetakan 5 stasiun pengamatan flora dan fauna utama di kawasan PLTU Teluk Sirih untuk memonitor keanekaragaman hayati secara berkala. Klik peta untuk memperbesar.</p>
                         <ul>
                             <li>Stasiun 1: Area Mess</li>
                             <li>Stasiun 2: Area Operasional</li>
@@ -631,51 +1016,154 @@
                         </ul>
                     </div>
                     <div class="data-image">
-                        <!-- GANTI DENGAN LINK GAMBAR PETA ANDA -->
-                        <img src="https://placehold.co/600x400/f4f7f6/333333?text=Peta+Kawasan+Konservasi" alt="Peta Kawasan Konservasi Kehati PLTU Teluk Sirih">
+                        <!-- 
+                            PENTING: GANTI 'https://...' DI BAWAH DENGAN URL PUBLIK DARI 'peta.jpg' ANDA 
+                        -->
+                        <img id="mapImage" src="https://placehold.co/800x600/f4f7f6/333333?text=Ganti+dengan+URL+peta.jpg+Anda" alt="Peta Kawasan Konservasi Kehati PLTU Teluk Sirih">
                     </div>
                 </div>
 
-                <!-- Grafik Indeks Kehati -->
+                <!-- BARU: Tabel Data HTML (dari tabelkehati.jpg) -->
+                <div class="data-table-wrapper">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem;">Indeks Keanekaragaman Hayati 2024-2025</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Indeks Keanekaragaman</th>
+                                <th>2024</th>
+                                <th>2025</th>
+                                <th>Perubahan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Indeks Strata Pohon</td>
+                                <td>1.18</td>
+                                <td>1.23</td>
+                                <td><span class="positive">▲ +0.05</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Indeks Strata Fauna (Mamalia)</td>
+                                <td>0.47</td>
+                                <td>1.22</td>
+                                <td><span class="positive">▲ +0.75</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Indeks Strata Fauna (Burung)</td>
+                                <td>2.45</td>
+                                <td>2.66</td>
+                                <td><span class="positive">▲ +0.21</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Indeks Strata Fauna (Herpetofauna)</td>
+                                <td>1.50</td>
+                                <td>1.63</td>
+                                <td><span class="positive">▲ +0.13</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.8rem; text-align: right; margin-top: 10px; color: var(--text-color);">
+                        * Sumber dari Laporan Monitoring Evaluasi Keanekaragaman Hayati PT PLN IP UBP Teluk Sirih
+                    </p>
+                </div>
+
+                <!-- BARU: Grafik Strata Pohon (dari grafikkehati.jpg) -->
                 <div class="data-impact-grid">
-                     <div class="data-image">
-                        <!-- GANTI DENGAN LINK GAMBAR GRAFIK ANDA -->
-                        <img src="https://placehold.co/600x400/f4f7f6/333333?text=Grafik+Indeks+Kehati" alt="Grafik Peningkatan Status Indeks Kehati 2024-2025">
-                    </div>
+                     <div class="chart-container" style="width:100%;">
+                        <h3>Peningkatan Indeks Strata Pohon</h3>
+                        <div class="bar-chart" id="pohonChart">
+                            <div class="bar-group">
+                                <div class="bar" data-value="1.18" style="--bar-height: 118px;"></div>
+                                <div class="year">2024</div>
+                            </div>
+                            <div class="bar-group">
+                                <div class="bar" data-value="1.23" style="--bar-height: 123px;"></div>
+                                <div class="year">2025</div>
+                            </div>
+                        </div>
+                     </div>
                     <div class="data-content">
-                        <h3>Kemajuan yang Terukur</h3>
-                        <p>Kami bangga melihat peningkatan nyata dalam Indeks Keanekaragaman Hayati kami. Ini adalah bukti bahwa upaya konservasi yang kami lakukan memberikan dampak positif.</p>
-                        <h3 style="color: var(--green-light); font-size: 2.5rem;">1.18 → 1.23</h3>
-                        <p><strong>Peningkatan Indeks Strata Pohon</strong> dari tahun 2024 ke 2025 menunjukkan pertumbuhan positif dalam kesehatan ekosistem kami.</p>
+                        <h3>Kemajuan Strata Pohon</h3>
+                        <p>Kami bangga melihat peningkatan nyata dalam Indeks Strata Pohon, yang naik dari <strong>1.18</strong> menjadi <strong>1.23</strong>. Ini adalah bukti bahwa upaya konservasi dan rehabilitasi lahan hijau yang kami lakukan memberikan dampak positif bagi kesehatan ekosistem.</p>
                     </div>
                 </div>
+                
+                <!-- BARU: Grafik Strata Fauna (dari grafikfauna.jpg) -->
+                <div class="data-impact-grid">
+                    <div class="data-content">
+                        <h3>Trend Peningkatan Indeks Strata Fauna</h3>
+                        <p>Analisis kami juga menunjukkan tren peningkatan yang signifikan pada berbagai strata fauna antara tahun 2024 dan 2025. Peningkatan ini mencakup mamalia, burung, dan herpetofauna, menandakan ekosistem yang lebih sehat dan berimbang.</p>
+                    </div>
+                     <div class="chart-container" style="width:100%;">
+                        <h3>Indeks Strata Fauna 2024-2025</h3>
+                        <div class="grouped-chart" id="faunaChart">
+                            <div class="year-group">
+                                <div class="bar-multi-group">
+                                    <div class="bar-g mamalia" data-value="0.47" style="--bar-height: 47px;"></div>
+                                    <div class="bar-g burung" data-value="2.45" style="--bar-height: 245px;"></div>
+                                    <div class="bar-g herpetofauna" data-value="1.50" style="--bar-height: 150px;"></div>
+                                </div>
+                                <div class="year">2024</div>
+                            </div>
+                            <div class="year-group">
+                                <div class="bar-multi-group">
+                                    <div class="bar-g mamalia" data-value="1.22" style="--bar-height: 122px;"></div>
+                                    <div class="bar-g burung" data-value="2.66" style="--bar-height: 266px;"></div>
+                                    <div class="bar-g herpetofauna" data-value="1.63" style="--bar-height: 163px;"></div>
+                                </div>
+                                <div class="year">2025</div>
+                            </div>
+                        </div>
+                        <div class="legend">
+                            <div class="legend-item"><span class="legend-color" style="background-color: var(--blue-sea);"></span> Mamalia</div>
+                            <div class="legend-item"><span class="legend-color" style="background-color: #f0ad4e;"></span> Burung</div>
+                            <div class="legend-item"><span class="legend-color" style="background-color: #5cb85c;"></span> Herpetofauna</div>
+                        </div>
+                     </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- 6. GALERI -->
+        <!-- 6. GALERI (DIROMBAK DENGAN 28 FOTO & POPUP) -->
         <section id="galeri" class="gallery">
             <div class="container">
                 <h2>Momen dari Lapangan</h2>
                 <div class="gallery-grid">
-                    <!-- GANTI DENGAN LINK GAMBAR GALERI ANDA -->
-                    <div class="gallery-item">
-                        <img src="https://placehold.co/400x300/97BC62/FFFFFF?text=Galeri+Foto+1" alt="Foto Kegiatan Penanaman Pohon">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://placehold.co/400x300/0077b6/FFFFFF?text=Galeri+Foto+2" alt="Foto Transplantasi Terumbu Karang">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://placehold.co/400x300/2C5F2D/FFFFFF?text=Galeri+Foto+3" alt="Foto Pohon Endemik Andalas">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://placehold.co/400x300/97BC62/FFFFFF?text=Galeri+Foto+4" alt="Area Hijau Pembangkit">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://placehold.co/400x300/0077b6/FFFFFF?text=Galeri+Foto+5" alt="Pemberdayaan Masyarakat">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://placehold.co/400x300/2C5F2D/FFFFFF?text=Galeri+Foto+6" alt="Pohon Tabebuya">
-                    </div>
+                    <!-- FOTO-FOTO BARU (28 FOTO) -->
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1fGrkhpa_9zaz_KbJci0Elpx_WK68Esvz" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1zqnjtxsTJP0Sou2KD_OM5tddpwv6xrnt" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1-wT-2DLD3JxXGCH5abzmadqSwrBnWv3e" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1ChZuQ8SZ2x8YHiIGo8v45GIJWzn9nrPt" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1u9Xm6Z-YX1PzsgDCmBNG7Jt_5VT_Dp2O" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1SoY1W00SVZXuIkb5NogcoNq4SvA1M-9_" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1jcVtNIcYq5DtTh9ljL8PdsEZR7cIdehd" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1t0UCudZyZQy81yZLfLZAAK0waw4rcTMQ" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1TUtBZGzSzXTI6hZvPv954oWxgplZZHI9" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/121yCGKDsR1IvXXsWbUS5_8ua5lt5_3Fw" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1IrSVbQLM2gP59WDHK8WheRefbgDXqajR" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1yjVY59Tk8WIMnVsv-C-NXvoY45jMQ8-G" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1Qz8cA_Ce6y-yqHzYXtCV0W78tsmr2dtD" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/16RDKse4UbTEwHlDVMuxyCqedEZGMPeOP" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1HGRtLru_osNnbSxbAyJlc5LLSXke9dDd" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1MYGuJUTAOrnpg13O2hq3PTOj4XQqtiSS" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1xTXdOKDE8ZjmZHVGhWEp5Ne6q4ipaOH3" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1S0wPkemAoj2EzWhUHNvl3JD9dtbeLyIe" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1O8HIIhiCj2evHwHmWA-hZj5LKdrunpkm" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1NADM-TZqDdTy7UaW1pkOw_zA6RBbEC5z" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1Mxj6Fxegkp8UTxRQ12Wq7y3Felxb2hy3" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/19zVvC0hxsqtiVWDbvqbIkzwUarAEe-6G" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1gOGeEIxBBvFE1l8DeLRUMFauSjfBvCFk" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1H3zVRdqZUgV56glpSyvDbWl9dsahCIYw" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1mf6G6I_1Fx4W134XT0XLFbiyvwOkcnrL" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/18ZTgATLjs6QjxGkE4SvWKhNvzBqhtSzi" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1WpAW37sUJ52XmXLQzlvrYy99max99Jq9" alt="Galeri Foto Teluk Sirih"></div>
+                    <div class="gallery-item"><img src="https://lh3.googleusercontent.com/d/1dJ78kqySxnCh77EYHh7iqoD4pF0Ek6lI" alt="Galeri Foto Teluk Sirih"></div>
                 </div>
             </div>
         </section>
@@ -700,86 +1188,229 @@
             <p>&copy; 2024 PT PLN Indonesia Power UBP Teluk Sirih. All Rights Reserved.</p>
         </div>
     </footer>
+    
+    <!-- BARU: MODAL UNTUK PETA -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal" id="closeMapModal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+    
+    <!-- BARU: MODAL UNTUK GALERI (DENGAN SHARE) -->
+    <div id="galleryModal" class="modal">
+        <span class="close-modal" id="closeGalleryModal">&times;</span>
+        <img class="modal-content" id="galleryModalImage">
+        <div class="share-container">
+            <div class="share-buttons">
+                <!-- SVG Ikon untuk Share -->
+                <a href="#" id="shareFacebook" class="share-btn facebook" target="_blank" title="Bagikan ke Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0 0 3.603 0 8.049c0 4.141 3.062 7.58 7.03 7.962v-5.627H4.84V8.05H7.03V6.03c0-2.169 1.29-3.377 3.27-3.377.92 0 1.86.164 1.86.164v2.094h-1.08c-1.06 0-1.42.66-1.42 1.383v1.604h2.42l-.41 2.356H9.71V16c3.96-.38 7.03-3.82 7.03-7.951z"/></svg>
+                </a>
+                <a href="#" id="shareTwitter" class="share-btn twitter" target="_blank" title="Bagikan ke X">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.918l-3.273-4.45L3.34 15.25H.887l5.6-6.4L0 .75h5.06l3.217 4.28L12.6.75zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633z"/></svg>
+                </a>
+                <a href="#" id="sharePinterest" class="share-btn pinterest" target="_blank" title="Bagikan ke Pinterest">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0a8 8 0 0 0-2.915 15.447c.144-.06.187-.21.187-.348s0-.488.022-1.258c.022-.73 1.123-4.755 1.123-4.755s-.29-.577-.29-1.43c0-1.34.78-2.33 1.75-2.33.82 0 1.22.617 1.22 1.36 0 .826-.527 2.06-.79 3.205-.217.91.45 1.65 1.35 1.65 1.61 0 2.84-1.69 2.84-4.15 0-2.01-1.44-3.44-3.52-3.44-2.43 0-3.86 1.8-3.86 3.61 0 .82.31 1.7.7 2.22.08.1.09.18.07.28l-.18.7c-.04.16-.14.2-.33.13-1.09-.39-1.78-1.57-1.78-2.9 0-2.35 1.68-4.44 4.86-4.44 2.56 0 4.54 1.82 4.54 4.26 0 2.51-1.55 4.38-3.72 4.38-.72 0-1.39-.37-1.62-.79 0 0-.36 1.44-.46 1.83-.16.59-.47 1.17-.67 1.41C4.42 15.73 3.3 14.6 3.3 12.78c0-2.31 2.2-6.11 2.2-6.11S6.17 6 6.17 6.5c0 .54.54.96.54.96s-1.8 7.7-2.14 9.04c-.39 1.48-1.57 3.35-1.57 3.35s-.01.002-.01.002z"/></svg>
+                </a>
+                <a href="#" id="copyLink" class="share-btn copylink" title="Salin Tautan">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zM6 1.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zM7.5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1-.5-.5z"/><path d="M6 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1H6.5a.5.5 0 0 1-.5-.5z"/></svg>
+                </a>
+            </div>
+            <span id="copySuccess" class="copy-success">Tautan disalin!</span>
+        </div>
+    </div>
 
-    <!-- KODE JAVASCRIPT UNTUK SLIDESHOW -->
+
     <script>
-        let slideIndex = 1;
-        let autoSlideInterval;
-
-        // Tampilkan slide pertama saat dimuat
+        // == JAVASCRIPT UTAMA (SEMUA FUNGSI) ==
         document.addEventListener("DOMContentLoaded", function() {
-            showSlides(slideIndex);
-            startAutoSlide();
-        });
 
-        // Fungsi untuk mengontrol slide secara manual melalui dots
-        function currentSlide(n) {
-            stopAutoSlide(); // Berhenti dulu jika user klik manual
-            showSlides(slideIndex = n);
-            startAutoSlide(); // Mulai lagi
-        }
-        
-        // Fungsi untuk slide maju/mundur (digunakan oleh auto-slide)
-        function plusSlides(n) {
-            stopAutoSlide();
-            showSlides(slideIndex += n);
-            startAutoSlide();
-        }
+            // === 1. FUNGSI DARK MODE ===
+            const themeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+            const currentTheme = localStorage.getItem('theme');
 
-        // Fungsi utama untuk menampilkan slide
-        function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("hero-slide");
-            let dots = document.getElementsByClassName("dot");
-            
-            // Atur slideIndex agar berputar (looping)
-            if (n > slides.length) { slideIndex = 1 }
-            if (n < 1) { slideIndex = slides.length }
-            
-            // Sembunyikan semua slide
-            for (i = 0; i < slides.length; i++) {
-                slides[i].classList.remove('active');
+            // Cek tema tersimpan saat memuat halaman
+            if (currentTheme) {
+                body.dataset.theme = currentTheme;
+                if (currentTheme === 'dark') {
+                    themeToggle.checked = true;
+                }
             }
-            
-            // Hapus kelas 'active' dari semua dots
-            for (i = 0; i < dots.length; i++) {
-                dots[i].classList.remove('active');
-            }
-            
-            // Tampilkan slide saat ini dan tandai dot yang sesuai
-            if (slides.length > 0 && dots.length > 0) { // Pastikan elemen ada
+
+            // Event listener untuk toggle
+            themeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    body.dataset.theme = 'dark';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    body.dataset.theme = 'light';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // === 2. FUNGSI SLIDESHOW ===
+            let slideIndex = 1;
+            let autoSlideInterval;
+            const slides = document.getElementsByClassName("hero-slide");
+            const dots = document.getElementsByClassName("dot");
+
+            function showSlides(n) {
+                if (slides.length === 0 || dots.length === 0) return; // Keluar jika tidak ada slide
+
+                // Atur slideIndex agar berputar (looping)
+                if (n > slides.length) { slideIndex = 1 }
+                if (n < 1) { slideIndex = slides.length }
+                
+                // Sembunyikan semua slide
+                for (let i = 0; i < slides.length; i++) {
+                    slides[i].classList.remove('active');
+                }
+                
+                // Hapus kelas 'active' dari semua dots
+                for (let i = 0; i < dots.length; i++) {
+                    dots[i].classList.remove('active');
+                }
+                
+                // Tampilkan slide saat ini dan tandai dot yang sesuai
                 slides[slideIndex-1].classList.add('active');
                 dots[slideIndex-1].classList.add('active');
             }
-        }
 
-        // Fungsi untuk memulai slideshow otomatis
-        function startAutoSlide() {
-            stopAutoSlide(); // Hentikan interval sebelumnya (jika ada)
-            autoSlideInterval = setInterval(function() {
-                plusSlides(1); // Pindah ke slide berikutnya
-            }, 5000); // Ganti gambar setiap 5 detik (5000ms)
-        }
+            window.currentSlide = function(n) { // Buat fungsi global
+                stopAutoSlide();
+                showSlides(slideIndex = n);
+                startAutoSlide();
+            }
+            
+            function plusSlides(n) {
+                stopAutoSlide();
+                showSlides(slideIndex += n);
+                startAutoSlide();
+            }
 
-        // Fungsi untuk menghentikan slideshow otomatis
-        function stopAutoSlide() {
-            clearInterval(autoSlideInterval);
-        }
-    </script>
-    
-    <!-- BARU: KODE JAVASCRIPT UNTUK ANIMASI SCROLL -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+            function startAutoSlide() {
+                stopAutoSlide();
+                autoSlideInterval = setInterval(() => plusSlides(1), 5000);
+            }
+
+            function stopAutoSlide() {
+                clearInterval(autoSlideInterval);
+            }
+            
+            // Mulai slideshow
+            showSlides(slideIndex);
+            startAutoSlide();
+
+
+            // === 3. FUNGSI MODAL PETA ===
+            const mapModal = document.getElementById("imageModal");
+            const mapImage = document.getElementById("mapImage");
+            const modalImage = document.getElementById("modalImage");
+            const closeMapModal = document.getElementById("closeMapModal");
+
+            if (mapImage) {
+                mapImage.onclick = function() {
+                    mapModal.style.display = "block";
+                    modalImage.src = this.src;
+                }
+            }
+            if (closeMapModal) {
+                closeMapModal.onclick = function() {
+                    mapModal.style.display = "none";
+                }
+            }
+            if (mapModal) {
+                mapModal.onclick = function(event) {
+                    if (event.target === mapModal) {
+                        mapModal.style.display = "none";
+                    }
+                }
+            }
+            
+            // === 4. FUNGSI MODAL GALERI & SHARE ===
+            const galleryModal = document.getElementById("galleryModal");
+            const galleryModalImage = document.getElementById("galleryModalImage");
+            const closeGalleryModal = document.getElementById("closeGalleryModal");
+            const galleryItems = document.querySelectorAll(".gallery-item img");
+            
+            const shareFB = document.getElementById("shareFacebook");
+            const shareTW = document.getElementById("shareTwitter");
+            const sharePI = document.getElementById("sharePinterest");
+            const copyBtn = document.getElementById("copyLink");
+            const copySuccessMsg = document.getElementById("copySuccess");
+            
+            let currentImageSrc = "";
+
+            galleryItems.forEach(item => {
+                item.onclick = function() {
+                    currentImageSrc = this.src;
+                    galleryModal.style.display = "block";
+                    galleryModalImage.src = currentImageSrc;
+                    
+                    // Update share links
+                    const encodedSrc = encodeURIComponent(currentImageSrc);
+                    const pageUrl = encodeURIComponent(window.location.href);
+                    const text = encodeURIComponent("Lihat foto konservasi keren ini!");
+                    
+                    shareFB.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedSrc}`;
+                    shareTW.href = `https://twitter.com/intent/tweet?url=${encodedSrc}&text=${text}`;
+                    sharePI.href = `https://pinterest.com/pin/create/button/?url=${pageUrl}&media=${encodedSrc}&description=${text}`;
+                }
+            });
+
+            if (closeGalleryModal) {
+                closeGalleryModal.onclick = function() {
+                    galleryModal.style.display = "none";
+                }
+            }
+            
+            if (galleryModal) {
+                galleryModal.onclick = function(event) {
+                    if (event.target === galleryModal) {
+                        galleryModal.style.display = "none";
+                    }
+                }
+            }
+
+            if (copyBtn) {
+                copyBtn.onclick = function(e) {
+                    e.preventDefault();
+                    navigator.clipboard.writeText(currentImageSrc).then(() => {
+                        // Tampilkan pesan sukses
+                        copySuccessMsg.classList.add("visible");
+                        setTimeout(() => {
+                            copySuccessMsg.classList.remove("visible");
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Gagal menyalin: ', err);
+                    });
+                }
+            }
+
+            // === 5. FUNGSI ANIMASI SCROLL & GRAFIK ===
             const observerOptions = {
-                root: null, // Menggunakan viewport
+                root: null,
                 rootMargin: "0px",
-                threshold: 0.1 // Muncul saat 10% elemen terlihat
+                threshold: 0.2 // Muncul saat 20% elemen terlihat
             };
 
             const observerCallback = (entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add("visible");
+                        
+                        // BARU: Animasi bar grafik saat terlihat
+                        if (entry.target.classList.contains('bar-chart') || entry.target.classList.contains('grouped-chart')) {
+                            const bars = entry.target.querySelectorAll('.bar, .bar-g');
+                            bars.forEach(bar => {
+                                // Ambil tinggi dari --bar-height di style
+                                const height = bar.style.getPropertyValue('--bar-height');
+                                if (height) {
+                                    bar.style.height = height;
+                                }
+                            });
+                        }
+                        
                         observer.unobserve(entry.target); // Animasi hanya sekali
                     }
                 });
@@ -788,13 +1419,11 @@
             const observer = new IntersectionObserver(observerCallback, observerOptions);
 
             // Ambil semua elemen yang ingin dianimasikan
-            const targets = document.querySelectorAll(".pillar, .card, .data-impact-grid, .gallery-item");
+            const targets = document.querySelectorAll(".pillar, .card, .data-impact-grid, .gallery-item, .data-table-wrapper, .chart-container, .bar-chart, .grouped-chart");
             targets.forEach(target => observer.observe(target));
+
         });
     </script>
 
 </body>
 </html>
-
-
-
