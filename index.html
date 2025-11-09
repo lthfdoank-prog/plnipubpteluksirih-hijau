@@ -161,6 +161,14 @@
         [data-theme='dark'] .logo-left {
             filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
         }
+        
+        /* PENYEMPURNAAN: Efek shadow dark mode untuk logo kanan (Danantara) */
+        [data-theme='dark'] .logo-right {
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+            background: rgba(255, 255, 255, 0.1); /* Latar belakang subtil agar lebih terlihat */
+            border-radius: 4px;
+        }
+
 
         .logo-text {
             font-size: 1.6rem;
@@ -351,14 +359,36 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
         
+        /* CSS LAMA (Dihapus)
         .pillar-icon {
             font-size: 3rem;
             color: var(--green-dark);
             margin-bottom: 1rem;
         }
+        */
         
+        /* PENYEMPURNAAN: CSS untuk Gambar Pilar */
+        .pillar-image-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .pillar-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .pillar:hover .pillar-image-container img {
+            transform: scale(1.05);
+        }
+        /* Akhir CSS Gambar Pilar */
+
         .pillar h3 {
             color: var(--text-color);
+            margin-top: 1rem; /* Jarak dari gambar */
         }
 
         /* == 4. PROGRAM UNGGULAN == */
@@ -379,10 +409,10 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             padding: 2rem;
             text-align: center;
-            /* BARU: Gradien border */
             border-top: 5px solid;
             border-image: var(--accent-gradient) 1;
             transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            overflow: hidden; /* Mencegah gambar keluar dari border-radius */
         }
         
         .card:hover {
@@ -390,6 +420,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
         
+        /* CSS LAMA (Dihapus)
         .card-icon {
             font-size: 3.5rem;
             margin-bottom: 1rem;
@@ -399,6 +430,26 @@
             background-clip: text;
             text-fill-color: transparent;
         }
+        */
+
+        /* PENYEMPURNAAN: CSS untuk Gambar Kartu Program */
+        .card-image-container {
+            width: calc(100% + 4rem); /* Lebar penuh + padding */
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            margin: -2rem -2rem 1.5rem -2rem; /* Tarik gambar ke tepi kartu */
+        }
+        .card-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            border-radius: 0; /* Hapus border-radius dari img */
+        }
+        .card:hover .card-image-container img {
+            transform: scale(1.05);
+        }
+        /* Akhir CSS Gambar Kartu */
         
         .card h3 {
             color: var(--text-color);
@@ -876,6 +927,12 @@
             .share-buttons {
                 gap: 5px; /* Rapatkan tombol share */
             }
+            
+            /* PENYEMPURNAAN: Perbaiki tampilan kartu di mobile */
+            .card-image-container {
+                 width: calc(100% + 4rem);
+                 margin: -2rem -2rem 1.5rem -2rem;
+            }
         }
 
     </style>
@@ -901,7 +958,8 @@
                     <li><a href="#unduh">Unduhan</a></li>
                     <!-- GANTI DENGAN LINK LOGO ANDA -->
                     <li>
-                        <img src="https://www.danantaraindonesia.com/images/v3/danantara-logo-black-v3.png" alt="Logo Danantara Indonesia" class="header-logo">
+                        <!-- PENYEMPURNAAN: Menambahkan kelas .logo-right untuk dark mode -->
+                        <img src="https://www.danantaraindonesia.com/images/v3/danantara-logo-black-v3.png" alt="Logo Danantara Indonesia" class="header-logo logo-right">
                     </li>
                 </ul>
                 <!-- BARU: Dark Mode Toggle -->
@@ -949,17 +1007,26 @@
                 </p>
                 <div class="commitment-pillars">
                     <div class="pillar">
-                        <div class="pillar-icon">🌿</div>
+                        <!-- PENYEMPURNAAN: Ikon diganti gambar -->
+                        <div class="pillar-image-container">
+                            <img src="https://placehold.co/400x300/2C5F2D/FFFFFF?text=Konservasi+Ekosistem" alt="Konservasi Ekosistem">
+                        </div>
                         <h3>Konservasi Ekosistem</h3>
                         <p>Termasuk rehabilitasi lahan hijau untuk menjaga keseimbangan alam.</p>
                     </div>
                     <div class="pillar">
-                        <div class="pillar-icon">🦋</div>
+                        <!-- PENYEMPURNAAN: Ikon diganti gambar -->
+                        <div class="pillar-image-container">
+                            <img src="https://placehold.co/400x300/0077b6/FFFFFF?text=Pelestarian+Flora+Fauna" alt="Pelestarian Flora & Fauna">
+                        </div>
                         <h3>Pelestarian Flora & Fauna</h3>
                         <p>Melindungi dan melestarikan spesies lokal dan endemik di area kami.</p>
                     </div>
                     <div class="pillar">
-                        <div class="pillar-icon">🤝</div>
+                        <!-- PENYEMPURNAAN: Ikon diganti gambar -->
+                        <div class="pillar-image-container">
+                            <img src="https://placehold.co/400x300/FFD700/333333?text=Pemberdayaan+Masyarakat" alt="Pemberdayaan Masyarakat">
+                        </div>
                         <h3>Pemberdayaan Masyarakat</h3>
                         <p>Mendorong nilai tambah ekonomi berkelanjutan berbasis lingkungan.</p>
                     </div>
@@ -973,21 +1040,30 @@
                 <h2>Program Keanekaragaman Hayati</h2>
                 <div class="program-cards">
                     <div class="card">
-                        <div class="card-icon">🌊</div>
+                        <!-- PENYEMPURNAAN: Ikon diganti gambar header kartu -->
+                        <div class="card-image-container">
+                            <img src="https://placehold.co/400x300/0077b6/FFFFFF?text=Konservasi+Terumbu+Karang" alt="Konservasi Terumbu Karang">
+                        </div>
                         <h3>Konservasi Terumbu Karang</h3>
                         <p>Bekerjasama dengan LKKPN Pekanbaru untuk memulihkan ekosistem laut.</p>
                         <div class="card-data">976</div>
                         <p>Bibit Telah Ditransplantasi</p>
                     </div>
                     <div class="card">
-                        <div class="card-icon">🌱</div>
+                        <!-- PENYEMPURNAAN: Ikon diganti gambar header kartu -->
+                        <div class="card-image-container">
+                            <img src="https://placehold.co/400x300/2C5F2D/FFFFFF?text=Konservasi+Tanaman+Endemik" alt="Konservasi Tanaman Endemik">
+                        </div>
                         <h3>Konservasi Tanaman Endemik</h3>
                         <p>Melindungi pohon langka (Andalas 14, P. Kuning 5, Cemara 14, P. Manila 5).</p>
                         <div class="card-data">38+</div>
                         <p>Total Batang Pohon Endemik</p>
                     </div>
                     <div class="card">
-                        <div class="card-icon">🌳</div>
+                        <!-- PENYEMPURNAAN: Ikon diganti gambar header kartu -->
+                        <div class="card-image-container">
+                            <img src="https://placehold.co/400x300/97BC62/FFFFFF?text=Program+Penghijauan" alt="Program Penghijauan">
+                        </div>
                         <h3>Program Penghijauan</h3>
                         <p>Penanaman rutin pohon produktif (Kaliandra 100, Tabebuya 30, dll).</p>
                         <div class="card-data">220+</div>
@@ -1427,6 +1503,3 @@
 
 </body>
 </html>
-
-
-
